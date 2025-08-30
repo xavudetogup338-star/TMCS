@@ -166,14 +166,10 @@ async function connectWallet(interactive = true) {
   const currentLang = getCurrentLang();
 
   if (!provider && isMobile && interactive) {
-    const params = new URLSearchParams({
-        dapp_encryption_public_key: bs58.encode(dappKeyPair.publicKey),
-        cluster: "mainnet-beta",
-        app_url: window.location.origin,
-        redirect_link: window.location.href.split('?')[0] + "?connect=1", // clean url for redirect
-    });
-    const url = `https://phantom.app/ul/v1/connect?${params.toString()}`;
-    window.location.href = url;
+    const modal = document.getElementById('mobile-wallet-notice');
+    if (modal) {
+        modal.classList.remove('hidden');
+    }
     return;
   }
 

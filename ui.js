@@ -209,6 +209,42 @@ function initTransferModal() {
     });
 }
 
+function initMobileWalletNoticeModal() {
+    const modal = document.getElementById('mobile-wallet-notice');
+    if (!modal) return;
+    
+    const closeBtn = document.getElementById('mobile-wallet-notice-close');
+    const copyBtn = document.getElementById('copy-website-url');
+    const urlEl = document.getElementById('website-url-display');
+
+    const closeModal = () => modal.classList.add('hidden');
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    copyBtn.addEventListener('click', () => {
+        const urlToCopy = urlEl.textContent.trim();
+        navigator.clipboard.writeText(urlToCopy).then(() => {
+            const originalIcon = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i data-feather="check"></i>';
+            feather.replace({ width: 16, height: 16 });
+            copyBtn.classList.add('copied');
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = originalIcon;
+                feather.replace({ width: 16, height: 16 });
+                copyBtn.classList.remove('copied');
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy URL: ', err);
+        });
+    });
+}
+
 function initMarqueeInteraction() {
     const marqueeTrack = document.querySelector('.marquee-track');
     if (!marqueeTrack) return;
@@ -269,6 +305,7 @@ export function initUI() {
     initCopyButtons();
     initTransferModal();
     initMarqueeInteraction();
+    initMobileWalletNoticeModal();
     
     // As wallet connection is removed, ensure "Connect Wallet" buttons are static.
     // They will inherit their default `data-translate` text.
