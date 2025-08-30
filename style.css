@@ -51,7 +51,7 @@ body {
     z-index: -1;
     background: 
         linear-gradient(rgba(11, 31, 51, 0.95), rgba(11, 31, 51, 0.95)),
-        url('TMCS_animated.webp');
+        url('/TMCS_transparent_animated.webp');
     background-size: cover;
     background-position: center;
 }
